@@ -1,17 +1,28 @@
 #include "Game.hpp"
 
-// Init *****
-Game gm(I2CADDR, DT, PGAIN, IGAIN, DGAIN);
+/*
+ * Init Class instance
+ */
+I2c     i2c(I2CADDR);
+Pid     pid(DT, PGAIN, IGAIN, DGAIN);
+Motor   motor(DT);
+LoadCel loadc(DT, 5.0);
 
+Game gm(&i2c, &pid, &motor, &loadc);
+
+
+/*
+ * I2c用の割り込み関数を定義
+ */
 void ReceiveEventForI2c(int inNumOfRecvBytes);
 void RequestEventForI2c(void);
-/* Main Loop  ***  Main Loop  ***  Maon Loop  ***  Main Loop  ***  Main Loop */
-/* Main Loop  ***  Main Loop  ***  Maon Loop  ***  Main Loop  ***  Main Loop */
-/* Main Loop  ***  Main Loop  ***  Maon Loop  ***  Main Loop  ***  Main Loop */
 
+
+/*
+ * 初期化関数
+ */
 void setup(void)
 {
-  // put your setup code here, to run once:
 //  checker.startFlag = false;
 
   Serial.begin(9600);
@@ -22,14 +33,28 @@ void setup(void)
   delay(1000);
 }
 
+
+/*
+ * main関数
+ */
 void loop(void)
 {
-  // put your main code here, to run repeatedly:
+  /* この中にゲーム内容を書き込む */
+
+
+
   gm.Step(150.0);
+
+
+
+  /* ********************** */
 }
-/* Main Loop  ***  Main Loop  ***  Maon Loop  ***  Main Loop  ***  Main Loop */
-/* Main Loop  ***  Main Loop  ***  Maon Loop  ***  Main Loop  ***  Main Loop */
-/* Main Loop  ***  Main Loop  ***  Maon Loop  ***  Main Loop  ***  Main Loop */
+
+
+
+
+
+
 
 void ReceiveEventForI2c(int inNumOfRecvBytes)
 {  

@@ -2,14 +2,15 @@
 
 Game::Game
 (
-    const uint8_t addr,
-    c_float dt,
-    c_float pGain, c_float iGain, c_float dGain
+    I2c*     i2c,
+    Pid*     pid,
+    Motor*   motor,
+    LoadCel* loadc
 )
-:_i2c(addr)
-,_pid(dt, pGain, iGain, dGain)
-,_motor(dt)
-,_loadc(dt)
+:_i2c(i2c)
+,_pid(pid)
+,_motor(motor)
+,_loadc(loadc)
 {
     _currentForce = 0.0;
     _calcForce    = 0.0;
@@ -17,12 +18,13 @@ Game::Game
 
 void Game::Step(c_float reff)
 {
-    _currentForce = _loadc.ReadCurrentForce();
-    _calcForce    = _motor.GetForceOfOL();
-    _motor.SetVellocity(_motor.MakePalseFrom(reff - _calcForce));
+    _currentForce = _loadc->ReadCurrentForce();
+    Serial.print("_currentForce = ");Serial.println(_currentForce);
+    _calcForce    = _motor->GetForceOfOL();
+    _motor->SetVellocity(_motor->MakePalseFrom(reff - _calcForce));
 
     Serial.print("refF, curentF, palse = ");
     Serial.print(reff);Serial.print(", ");
     Serial.print(_currentForce);Serial.print(", ");
-    Serial.println(_motor.MakePalseFrom(reff - _calcForce));
+    Serial.println(_motor->MakePalseFrom(reff - _calcForce));
 }
