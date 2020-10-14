@@ -26,6 +26,7 @@ public:
         );
     void Step(c_float reff);
     void TestLoadCel();
+    float Go();
 };
 
 #endif

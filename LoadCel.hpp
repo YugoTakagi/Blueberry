@@ -11,16 +11,15 @@ private:
     float _dt;
     float _wCut;
 
-    long _num;
+    int   _num;
     float _voltage;
-    float _force;
+    float _force[2];
 
     float _sCut;
     float _a;
-    float _yOfRc[2];
 
     float ReadCurrentVoltage(void);
-    float RCFilter(void);
+    float RCFilter(float old, float sta);
 public:
     LoadCel(c_float dt, float wCut);
     float ReadCurrentForce(void);
