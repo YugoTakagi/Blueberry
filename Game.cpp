@@ -28,3 +28,10 @@ void Game::Step(c_float reff)
     Serial.print(_currentForce);Serial.print(", ");
     Serial.println(_motor->MakePalseFrom(reff - _calcForce));
 }
+
+void Game::TestLoadCel()
+{
+    _currentForce = _loadc->ReadCurrentForce();
+    // Serial.print("_currentForce = ");
+    Serial.println(_currentForce);
+}

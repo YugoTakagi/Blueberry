@@ -25,6 +25,7 @@ public:
             LoadCel* loadc
         );
     void Step(c_float reff);
+    void TestLoadCel();
 };
 
 #endif

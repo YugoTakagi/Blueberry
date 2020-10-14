@@ -43,7 +43,8 @@ void loop(void)
 
 
 
-  gm.Step(150.0);
+  // gm.Step(150.0);
+  gm.TestLoadCel();
 
 
 

@@ -33,7 +33,7 @@ float LoadCel::ReadCurrentVoltage(void)
 float LoadCel::ReadCurrentForce(void)
 {
     ReadCurrentVoltage();
-    RCFilter();
+    _voltage = RCFilter();
     _force = (_voltage - B)/(A);
     return _force;
 }
