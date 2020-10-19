@@ -24,7 +24,7 @@ public:
             Motor*   motor,
             LoadCel* loadc
         );
-    void Step(c_float reff);
+    void StepResponse(c_float reff);
     void TestLoadCel();
     float Go();
 };

@@ -21,6 +21,8 @@ void RequestEventForI2c(void);
 /*
  * 初期化関数
  */
+unsigned long time_data = 0;
+unsigned long time_data2 = 0;
 void setup(void)
 {
 //  checker.startFlag = false;
@@ -29,31 +31,45 @@ void setup(void)
   Wire.begin(I2CADDR);
   Wire.onReceive(ReceiveEventForI2c); //割り込み関数(for i2c)
   Wire.onRequest(RequestEventForI2c); //割り込み関数(for i2c)
-  float currentForce = 0.0;
-  delay(1000);
-  while(loadc.ReadCurrentForce() < 20.0) gm.Go();
-  motor.Stop();
-  delay(1000);
-  while(loadc.ReadCurrentForce() < 450.0) gm.Go();
-  motor.Stop();
+  // float currentForce = 0.0;
+  // delay(1000);
+  // while(currentForce < 20.0) currentForce = gm.Go();
+  // motor.Stop();
+  // delay(1000);
+  // while(currentForce < 150.0) currentForce = gm.Go();
+  // motor.Stop();
+  // delay(1000);
+
+  // time_data = millis();
+
+  // gm.Step(150.0);
+
+  // time_data2 = millis();
+  // Serial.print("dmillis: ");
+  // Serial.println(time_data2-time_data);
 }
 
 
 /*
- * main関数
+ * mainループ
  */
 void loop(void)
 {
-  /* この中にゲーム内容を書き込む */
+  while(true)
+  {
+  /* ----------------- この中にゲーム内容を書き込む ------------------ */
 
 
-  Serial.println(loadc.ReadCurrentForce());
+
+  // delay(20);
+  // Serial.println(loadc.ReadCurrentForce());
   // gm.Step(150.0);
   // gm.TestLoadCel();
 
 
 
-  /* ********************** */
+  /* ----------------- この中にゲーム内容を書き込む ------------------ */
+  }
 }
 
 

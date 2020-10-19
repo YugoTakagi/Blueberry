@@ -8,7 +8,7 @@ Motor::Motor(c_float dt)
   _pMpp    = 0.0;
   _hz      = 0;
   _palse   = 0;
-  _dPalse = 0;
+  _dPalse  = 0;
 
   _x = 0.0;
   _forceOfOL = 0.0;
