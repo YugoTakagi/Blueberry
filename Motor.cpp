@@ -26,13 +26,15 @@ void Motor::SetVellocity(c_long freq) const
 void Motor::Cw(const unsigned long freq) const
 {
   // noTone(PinForCw); noTone(PinForCcw);
-  digitalWrite(PinForCcw, LOW);
+  // digitalWrite(PinForCcw, LOW);
+  noTone(PinForCcw);
   tone(PinForCw, freq, MS);
 }
 void Motor::Ccw(const unsigned long freq) const
 {
   // noTone(PinForCw); noTone(PinForCcw);
-  digitalWrite(PinForCw, LOW);
+  // digitalWrite(PinForCw, LOW);
+  noTone(PinForCw);
   tone(PinForCcw, freq, MS);
 }
 
@@ -52,8 +54,8 @@ void Motor::Stop(void) const
 {
   noTone(PinForCw);
   noTone(PinForCcw);
-  digitalWrite(PinForCcw, LOW);
-  digitalWrite(PinForCw, LOW);
+  // digitalWrite(PinForCcw, LOW);
+  // digitalWrite(PinForCw, LOW);
 }
 
 long Motor::MakePalseFrom(c_float force)

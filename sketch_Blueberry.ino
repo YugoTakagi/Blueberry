@@ -31,8 +31,8 @@ void setup(void)
   Wire.begin(I2CADDR);
   Wire.onReceive(ReceiveEventForI2c); //割り込み関数(for i2c)
   Wire.onRequest(RequestEventForI2c); //割り込み関数(for i2c)
-  pinMode(PinForCw,  OUTPUT);
-  pinMode(PinForCcw, OUTPUT);
+  // pinMode(PinForCw,  OUTPUT);
+  // pinMode(PinForCcw, OUTPUT);
   delay(1000);
 
   // float currentForce = 0.0;
@@ -70,12 +70,14 @@ void setup(void)
  */
 void loop(void)
 {
+  float i = 1.0;
   while(true)
   {
   /* ----------------- この中にゲーム内容を書き込む ------------------ */
 
 
-  // motor.SetVellocity(motor.MakePalseFrom(150.0));
+  motor.SetVellocity(motor.MakePalseFrom(150.0));
+  // i = i * -1.0;
 
   // delay(20);
   // Serial.println(loadc.ReadCurrentForce());
