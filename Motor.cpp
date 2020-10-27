@@ -16,7 +16,8 @@ Motor::Motor(c_float dt)
 void Motor::SetVellocity(c_long freq) const
 {
   if(freq > 0){
-    Cw(FilterVellocity(freq));
+    // Cw(FilterVellocity(freq));
+    Cw(freq);
   }
   else{
     Ccw(FilterVellocity(freq)*-1);
@@ -24,13 +25,13 @@ void Motor::SetVellocity(c_long freq) const
 }
 void Motor::Cw(const unsigned long freq) const
 {
-//  noTone(PinForCw); noTone(PinForCcw);
-  tone(PinForCw, freq);
+  // noTone(PinForCw); noTone(PinForCcw);
+  tone(PinForCw, freq, MS);
 }
 void Motor::Ccw(const unsigned long freq) const
 {
-// noTone(PinForCw); noTone(PinForCcw);
-  tone(PinForCcw, freq);
+  // noTone(PinForCw); noTone(PinForCcw);
+  tone(PinForCcw, freq, MS);
 }
 
 long Motor::FilterVellocity(c_long freq) const
@@ -53,11 +54,17 @@ void Motor::Stop(void) const
 
 long Motor::MakePalseFrom(c_float force)
 {
-  _mMove = force / springConstant;
-  _xPps = (pulleyDiameter*M_PI) / (gearRate*motorResolution);
+  // _mMove = (2.0*force)/(springConstant);//フックの法則 + 動滑車
+  _mMove = (4.0*force)/(springConstant);//フックの法則 + 動滑車
+  // Serial.print("_mMove = ");Serial.println(_mMove,6);
+  _xPps = (pulleyDiameter*M_PI)/(gearRate*motorResolution);
+  // Serial.print("_xPps = ");Serial.println(_xPps,8);
   _pMpp = _mMove / _xPps;
+  // Serial.print("_pMpp = ");Serial.println(_pMpp,6);
   float floatHz = _pMpp / _dt;
   _hz = (long) floatHz;
+
+  // Serial.print("_hz = ");Serial.println(_hz);
 
   _palse = FilterPalse(_hz);
   _dPalse = Make20msPalse(_palse);

@@ -1,5 +1,5 @@
-#ifndef GAME
-#define GAME
+#ifndef MUSCLE
+#define MUSCLE
 
 #include "Define.hpp"
 #include "Pid.hpp"
@@ -7,7 +7,7 @@
 #include "Motor.hpp"
 #include "LoadCel.hpp"
 
-class Game
+class Muscle
 {
 private:
     I2c*     _i2c;
@@ -17,16 +17,18 @@ private:
 
     float _currentForce;
     float _calcForce;
+    
+    long  _palse;
 public:
-    Game(
+    Muscle(
             I2c*     i2c,
             Pid*     pid,
             Motor*   motor,
             LoadCel* loadc
         );
-    void StepResponse(c_float reff);
-    void TestLoadCel();
-    float Go();
+    void  StepResponse(c_float reff);
+    float OutOnePalse();
+    void  Debug_init20N_to_Step(const float N);
 };
 
 #endif

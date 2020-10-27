@@ -7,7 +7,8 @@ typedef const int    c_int;
 typedef unsigned int u_int;
 
 /* ---------------------------------------------- １ループの時間 */
-c_float DT    = 0.02;//[s]
+c_float DT = 0.02;//[s]
+const unsigned long MS = 20;//[s]
 
 
 /* ---------------------------------------------- PIDゲイン */
@@ -17,9 +18,9 @@ c_float DGAIN = 0.0;// 0.03
 
 
 /* ---------------------------------------------- 筋張力発生機構のパラメータ */
-c_float springConstant  = 88150;//[N/m]
+const unsigned long springConstant  = 88150;//[N/m]
 c_float pulleyDiameter  = 0.03;//[m]
-c_int   gearRate        = 10;//[ ]
+c_int   gearRate        = 10;//[-]
 c_int   motorResolution = 1000;//[Hz]
 c_long  MAXVellocity    = 50000;//[Hz] 50rpm
 
@@ -38,7 +39,10 @@ c_int Register = 1;
 /* y = a * x + b */
 // c_float A = 0.0056;
 // c_float B = -0.1038;
-const float A = 496.17;
-const float B = -4.88;
+// 1回目 良くなかった.
+// const float A = 496.17;
+// const float B = -4.88;
+const float A = 537.976; //6桁にした
+const float B = 3.46380; //6桁にした
 
 #endif

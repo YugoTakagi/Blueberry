@@ -13,9 +13,7 @@ union Packet
 
 // Wireライブラリを拡張し, I2C通信(送受信)をfloat(4byte)の単位でおこないます.
 // Example:
-//      I2c inst(addr);
-//      float data = inst.Read();
-//      inst.Write(data);
+//      I2c xxx(addr); /* addrはi2cアドレス */
 class I2c
 {
 private:

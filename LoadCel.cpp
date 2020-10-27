@@ -39,10 +39,10 @@ float LoadCel::ReadCurrentVoltage(void)
 
 float LoadCel::ReadCurrentForce(void)
 {
-    ReadCurrentVoltage();
-    // _voltage = RCFilter();
+    _voltage = RCFilter(_voltage, ReadCurrentVoltage());
     _force[1] = _force[0];
     _force[0] = A * _voltage + B;
+    // _force[0] = _voltage;
     // Serial.print(_force[0]);Serial.print(",");
 
     _force[0] = RCFilter(_force[1], _force[0]);
