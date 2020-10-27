@@ -16,8 +16,8 @@ Motor::Motor(c_float dt)
 void Motor::SetVellocity(c_long freq) const
 {
   if(freq > 0){
-    // Cw(FilterVellocity(freq));
-    Cw(freq);
+    Cw(FilterVellocity(freq));
+    // Cw(freq);
   }
   else{
     Ccw(FilterVellocity(freq)*-1);
@@ -26,17 +26,19 @@ void Motor::SetVellocity(c_long freq) const
 void Motor::Cw(const unsigned long freq) const
 {
   // noTone(PinForCw); noTone(PinForCcw);
+  digitalWrite(PinForCcw, LOW);
   tone(PinForCw, freq, MS);
 }
 void Motor::Ccw(const unsigned long freq) const
 {
   // noTone(PinForCw); noTone(PinForCcw);
+  digitalWrite(PinForCw, LOW);
   tone(PinForCcw, freq, MS);
 }
 
 long Motor::FilterVellocity(c_long freq) const
 {
-  if(labs(freq) > MAXVellocity)
+  if(abs(freq) > MAXVellocity)
   {
     if(freq > 0) return MAXVellocity;
     else return -1* MAXVellocity;
@@ -50,6 +52,8 @@ void Motor::Stop(void) const
 {
   noTone(PinForCw);
   noTone(PinForCcw);
+  digitalWrite(PinForCcw, LOW);
+  digitalWrite(PinForCw, LOW);
 }
 
 long Motor::MakePalseFrom(c_float force)
