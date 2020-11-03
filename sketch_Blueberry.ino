@@ -18,22 +18,27 @@ void ReceiveEventForI2c(int inNumOfRecvBytes);
 void RequestEventForI2c(void);
 
 
-/*
- * 初期化関数
- */
+
 unsigned long time_data = 0;
 unsigned long time_data2 = 0;
 void setup(void)
 {
 //  checker.startFlag = false;
+  /* ----------------- この中に初期設定を書き込む ------------------ */
+
+
 
   Serial.begin(9600);
   Wire.begin(I2CADDR);
   Wire.onReceive(ReceiveEventForI2c); //割り込み関数(for i2c)
   Wire.onRequest(RequestEventForI2c); //割り込み関数(for i2c)
-  // pinMode(PinForCw,  OUTPUT);
-  // pinMode(PinForCcw, OUTPUT);
   delay(1000);
+
+
+
+  /* ----------------- /この中に初期設定を書き込む ----------------- */
+
+
 
   // float currentForce = 0.0;
   // delay(1000);
@@ -48,9 +53,10 @@ void setup(void)
 
 
 
-
-  // while(_currentForce <= 150.0) _currentForce = this->OutOnePalse();
-  // muscle.Debug_init20N_to_Step(150.0/*[N]*/);
+  // float currentForce = 0.0;
+  // while(currentForce <= 150.0) currentForce = muscle.OutOnePalse();
+  // motor.Stop();
+  // muscle.Debug_init20N_to_Step(50.0/*[N]*/);
 
 
 
@@ -70,23 +76,22 @@ void setup(void)
  */
 void loop(void)
 {
-  float i = 1.0;
   while(true)
   {
   /* ----------------- この中にゲーム内容を書き込む ------------------ */
 
 
-  motor.SetVellocity(motor.MakePalseFrom(150.0));
-  // i = i * -1.0;
-
-  // delay(20);
-  // Serial.println(loadc.ReadCurrentForce());
-  // gm.Step(150.0);
-  // gm.TestLoadCel();
+    // motor.SetVellocity(motor.MakePalseFrom(150.0));
 
 
+    // delay(20);
+    // Serial.println(loadc.ReadCurrentForce());
+    // gm.Step(150.0);
+    // gm.TestLoadCel();
 
-  /* ----------------- この中にゲーム内容を書き込む ------------------ */
+
+
+  /* ----------------- /この中にゲーム内容を書き込む ----------------- */
   }
 }
 

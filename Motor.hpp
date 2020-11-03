@@ -15,15 +15,17 @@ private:
     long Make20msPalse(long palse);
     void MakeX(long palseDt);
 
-    float _x;
-    float _forceOfOL;
+    // float _x;
+    // float _forceOfOL;
 
-    float _mMove;
-    float _xPps;
-    float _pMpp;
-    long  _hz;
+    // float _mMove;
+    // float _xPps;
+    // float _pMpp;
+    float _pRef;
+    float _pInp;
+    // long  _hz;
     long  _palse;
-    long  _dPalse;
+    // long  _dPalse;
 public:
     Motor(c_float dt);
     void Stop(void) const;

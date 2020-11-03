@@ -12,9 +12,9 @@ const unsigned long MS = 20;//[s]
 
 
 /* ---------------------------------------------- PIDゲイン */
-c_float PGAIN = 15;// 1.5
-c_float IGAIN = 0.0;// 0.26
-c_float DGAIN = 0.0;// 0.03
+c_float PGAIN = 0.206522;// 1.5
+c_float IGAIN = 0.27;// 0.26
+c_float DGAIN = 0.47;// 0.03
 
 
 /* ---------------------------------------------- 筋張力発生機構のパラメータ */
@@ -22,8 +22,11 @@ const unsigned long springConstant  = 88150;//[N/m]
 c_float pulleyDiameter  = 0.03;//[m]
 c_int   gearRate        = 10;//[-]
 c_int   motorResolution = 1000;//[Hz]
-c_long  MAXVellocity    = 50000;//[Hz] 50rpm
+// c_long  MAXVellocity    = 50000;//[Hz] 50rpm
+c_long  MAXVellocity    = 65535;//[Hz] 50rpm
 
+// 最小二乗法を用いた張力とパルスの関係式
+c_float A_NP            = 0.04443402;//[N/palse]
 
 /* ---------------------------------------------- ピンセット */
 #define PinForAnalogRead 1
