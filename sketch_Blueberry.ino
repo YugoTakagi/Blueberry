@@ -56,7 +56,8 @@ void setup(void)
   // float currentForce = 0.0;
   // while(currentForce <= 150.0) currentForce = muscle.OutOnePalse();
   // motor.Stop();
-  // muscle.Debug_init20N_to_Step(50.0/*[N]*/);
+  // muscle.Debug_init50N_to_Step(50.0/*[N]*/);
+  // muscle.Debug_init50N_to_Step_With_PID(50.0/*[N]*/);
 
 
 
