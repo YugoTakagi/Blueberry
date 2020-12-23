@@ -50,6 +50,19 @@ float Muscle::OutOnePalse()
     // ONEパルスを出力
     _motor->SetVellocity(50);
     delay(20);
+    _motor->Stop();
+    Serial.print(_currentForce);Serial.println();
+    return _currentForce;
+}
+
+float Muscle::OutOnePalse_ccw()
+{
+    _currentForce = _loadc->ReadCurrentForce();
+
+    // ONEパルスを出力
+    _motor->SetVellocity(-50);
+    delay(20);
+    _motor->Stop();
     Serial.print(_currentForce);Serial.println();
     return _currentForce;
 }
@@ -60,6 +73,7 @@ void Muscle::Debug_init50N_to_Step(const float N)
     // 50 [N]を加える(ワイヤのたるみ防止)
     _currentForce = _loadc->ReadCurrentForce();
     while(_currentForce <= 50.0) _currentForce = this->OutOnePalse();
+    // while(_currentForce <= 20.0) _currentForce = this->OutOnePalse();
     _motor->Stop();
 
     // x [s]停止
@@ -74,7 +88,7 @@ void Muscle::Debug_init50N_to_Step(const float N)
     // N [N]のステップ関数を加える
     _palse = _motor->MakePalseFrom(N);
     _motor->SetVellocity(_palse);
-    Serial.print("palse, ");Serial.println(_palse);
+    // Serial.print("palse, ");Serial.println(_palse);
 
     // _motor->SetVellocity(33757);// 30 [N]
     // _motor->SetVellocity(32911);// 40 [N] 49034
@@ -86,16 +100,18 @@ void Muscle::Debug_init50N_to_Step(const float N)
     _motor->Stop();
 }
 
-// 20 [N]加えてから, N [N]のステップ関数を出力します(With PID).
-void Debug_init50N_to_Step_With_PID(const float N)
+// x [N]加えてから, N [N]のステップ関数を出力します(With PID).
+void Muscle::Debug_init50N_to_Step_With_PID(const float N)
 {
     // 50 [N]を加える(ワイヤのたるみ防止)
+    float init_force = 50.0;
+    // float init_force = 100.0;
     _currentForce = _loadc->ReadCurrentForce();
-    while(_currentForce <= 50.0) _currentForce = this->OutOnePalse();
+    while(_currentForce <= init_force) _currentForce = this->OutOnePalse();
     _motor->Stop();
 
     // 2 [s]停止
-    int deleyTime = 2;//[s] たるんできたら2sはやめよう.
+    int deleyTime = 2;//[s]
     for(int i=0; i < deleyTime*50; i++)
     {
         Serial.println(_loadc->ReadCurrentForce());
@@ -106,11 +122,43 @@ void Debug_init50N_to_Step_With_PID(const float N)
     // N [N]のステップ関数を加える
     while(true)
     {
-        _currentForce = _loadc->ReadCurrentForce();        
-        _palse = _motor->MakePalseFrom(_pid->MakeAdjustment(N, _currentForce));
+        _currentForce = _loadc->ReadCurrentForce();       
+        Serial.print(_loadc->ReadCurrentForce()); Serial.print(",");
+
+        _palse = _motor->MakePalseFrom(_pid->MakeAdjustment(N, (_currentForce-init_force)));
+        Serial.print(_palse); Serial.println(",");
         _motor->SetVellocity(_palse);
-        Serial.print("palse,");Serial.println(_palse);
         delay(20);
+        _motor->Stop();
     }
+    _motor->Stop();
+}
+
+void Muscle::Debug_cw_ccw()
+{
+    int c = 1;
+    for(int i=0; i<20; i++)
+    {
+        _palse =  c *MAXVellocity;
+        Serial.print(_palse); Serial.println(",");
+        _motor->SetVellocity(_palse);
+        delay(20);
+        _motor->Stop();
+        c *= -1;
+    }
+    _motor->Stop();
+}
+
+
+// forceを目標値として, PID制御を行います. Loop内で使用して下さい.
+void Muscle::Stretch(const float force)
+{
+    _currentForce = _loadc->ReadCurrentForce();       
+    // Serial.print(_loadc->ReadCurrentForce()); Serial.print(",");
+
+    _palse = _motor->MakePalseFrom(_pid->MakeAdjustment(force, _currentForce));
+    // Serial.print(_palse); Serial.println(",");
+    _motor->SetVellocity(_palse);
+    delay(20);
     _motor->Stop();
 }

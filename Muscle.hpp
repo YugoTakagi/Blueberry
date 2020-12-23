@@ -28,8 +28,12 @@ public:
         );
     void  StepResponse(c_float reff);
     float OutOnePalse();
+    float OutOnePalse_ccw();
     void  Debug_init50N_to_Step(const float N);
     void  Debug_init50N_to_Step_With_PID(const float N);
+
+    void  Debug_cw_ccw(void);
+    void  Stretch(const float force);
 };
 
 #endif

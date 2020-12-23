@@ -19,7 +19,6 @@ void Motor::SetVellocity(c_long freq) const
 {
   if(freq > 0){
     Cw(FilterVellocity(freq));
-    // Cw(freq);
   }
   else{
     Ccw(FilterVellocity(freq)*-1);
@@ -27,15 +26,29 @@ void Motor::SetVellocity(c_long freq) const
 }
 void Motor::Cw(const unsigned long freq) const
 {
-  noTone(PinForCcw);
+    noTone(PinForCcw);
   // tone(PinForCw, freq, MS);
-  tone(PinForCw, freq);
+    if (freq < 31)
+    {
+        this->Stop();
+    }
+    else
+    {
+        tone(PinForCw, freq);
+    }  
 }
 void Motor::Ccw(const unsigned long freq) const
 {
-  noTone(PinForCw);
-  // tone(PinForCcw, freq, MS);
-  tone(PinForCcw, freq);
+    noTone(PinForCw);
+    // tone(PinForCcw, freq, MS);
+    if (freq < 31)
+    {
+        this->Stop();
+    }
+    else
+    {
+        tone(PinForCcw, freq);
+    }
 }
 
 long Motor::FilterVellocity(c_long freq) const
@@ -56,13 +69,35 @@ void Motor::Stop(void) const
   noTone(PinForCcw);
 }
 
+// void Motor::miniTone(bool dir, const long freq)
+// {
+//   long t = 1000 / hz;
+//   for
+//   if(dir == true)
+//   {
+//     digitalWrite(PinForCw, HIGH);
+//     delay(t/2);
+//     digitalWrite(PinForCw, LOW);
+//     delay(t/2);
+//   }
+//   else
+//   {
+//     digitalWrite(PinForCcw, HIGH);
+//     delay(t/2);
+//     digitalWrite(PinForCcw, LOW);
+//     delay(t/2);
+//   }
+// }
+
 long Motor::MakePalseFrom(c_float force)
 {
   // 最小二乗法を用いた張力とパルスの関係式
-  _pRef = (force)/(A_NP);
+  if(force >= 0) _pRef = (force)/(A_NP);
+  else _pRef = (force)/(A_NPB);
+  
   _pInp = (_pRef)/(_dt);
-
   _palse = FilterPalse((long) _pInp);
+
   return _palse;
 }
 

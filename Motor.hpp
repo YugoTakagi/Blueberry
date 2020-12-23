@@ -1,8 +1,7 @@
-#ifndef MOTOR
-#define MOTOR
+#ifndef __MOTOR__
+#define __MOTOR__
 
 #include "Arduino.h"
-#include <Wire.h> // For I2C.
 #include "Define.hpp"
 
 class Motor
@@ -14,6 +13,8 @@ private:
     long FilterPalse(long palse);
     long Make20msPalse(long palse);
     void MakeX(long palseDt);
+
+    void miniTone(bool dir, const long freq);
 
     // float _x;
     // float _forceOfOL;
@@ -37,4 +38,4 @@ public:
     long MakePalseFrom(c_float force);
 };
 
-#endif
+#endif //__MOTOR__
